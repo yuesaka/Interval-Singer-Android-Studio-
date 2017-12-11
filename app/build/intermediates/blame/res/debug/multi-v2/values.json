@@ -1,0 +1,64 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/yuesaka/Code/Interval-Singer-AS/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/yuesaka/Code/Interval-Singer-AS/app/src/main/res/values/arrays.xml",
+                    "from": {
+                        "startLines": "15,33,3,9",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "383,950,56,230",
+                        "endLines": "32,50,8,14",
+                        "endColumns": "19,19,19,19",
+                        "endOffsets": "945,1380,225,378"
+                    },
+                    "to": {
+                        "startLines": "2,20,38,44",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,622,1057,1231",
+                        "endLines": "19,37,43,49",
+                        "endColumns": "19,19,19,19",
+                        "endOffsets": "617,1052,1226,1379"
+                    }
+                },
+                {
+                    "source": "/Users/yuesaka/Code/Interval-Singer-AS/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "6,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "186,510",
+                        "endLines": "12,17",
+                        "endColumns": "12,12",
+                        "endOffsets": "472,665"
+                    },
+                    "to": {
+                        "startLines": "61,68",
+                        "startColumns": "4,4",
+                        "startOffsets": "1933,2224",
+                        "endLines": "67,70",
+                        "endColumns": "12,12",
+                        "endOffsets": "2219,2379"
+                    }
+                },
+                {
+                    "source": "/Users/yuesaka/Code/Interval-Singer-AS/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "3,4,8,5,10,12,13,9,6,11,7",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "56,108,311,161,415,519,556,367,212,471,271",
+                        "endColumns": "51,52,55,50,55,36,51,47,58,47,39",
+                        "endOffsets": "103,156,362,207,466,551,603,410,266,514,306"
+                    },
+                    "to": {
+                        "startLines": "50,51,52,53,54,55,56,57,58,59,60",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "1384,1436,1489,1545,1596,1652,1689,1741,1789,1845,1893",
+                        "endColumns": "51,52,55,50,55,36,51,47,55,47,39",
+                        "endOffsets": "1431,1484,1540,1591,1647,1684,1736,1784,1840,1888,1928"
+                    }
+                }
+            ]
+        }
+    ]
+}
