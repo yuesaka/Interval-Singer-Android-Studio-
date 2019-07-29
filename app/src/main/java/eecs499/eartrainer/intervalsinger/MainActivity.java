@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 	private final Runnable callback = new Runnable() {
 		public void run() {
 			Log.v(TAG, "in callback...");
-			double linearFreq = Math.log(mTuner.currentFrequency / 440.0)
+			double linearFreq = Math.log(mTuner.getCurrentFrequency() / 440.0)
 					/ Math.log(2) + 4;
 			double octave = Math.floor(linearFreq);
 			double cents = 1200 * (linearFreq - octave);

@@ -13,7 +13,8 @@ public class Tuner extends Thread {
 
 	public native double processSampleData(byte[] sample, int sampleRate);
 
-	public double currentFrequency = 0.0;
+	private double currentFrequency = 0.0;
+	private static final String TAG = Tuner.class.getSimpleName();
 	private static final int SAMPLE_RATE = 44100;
 	private static final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 	private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
@@ -31,16 +32,14 @@ public class Tuner extends Thread {
 	}
 
 	public void run() {
-		Log.d("yuma", "Tuner#run");
 		if (audioRecorder.getState() != AudioRecord.STATE_INITIALIZED) {
-			Log.d("yuma", "returning");
+			Log.e(TAG, "Audio Recorder not initialized. Check to see if permission is given.")
 			return; // Do nothing if not initialized
 		}
 		audioRecorder.startRecording();
 		byte[] readBuffer = new byte[READ_BUFFER_SIZE];
 		byte[] processBuffer = new byte[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
 		int nextToFillIndex = 0;
-		Log.d("yuma", "before while loop " );
 
 		while (audioRecorder.read(readBuffer, 0, readBuffer.length) > 0) {
 			System.arraycopy(readBuffer, 0, processBuffer, nextToFillIndex * READ_BUFFER_SIZE,
@@ -49,16 +48,10 @@ public class Tuner extends Thread {
 			nextToFillIndex %= PROCESS_BUFFER_SIZE;
 
 			currentFrequency = processSampleData(processBuffer, SAMPLE_RATE);
-			Log.d("yuma", "currentFrequency: " + currentFrequency);
 			if (currentFrequency > 0) {
 				mHandler.post(callback);
 			}
 		}
-	}
-
-	public void stopRunning() {
-		super.stop();
-
 	}
 
 	public void close() {
@@ -66,5 +59,9 @@ public class Tuner extends Thread {
 			audioRecorder.stop();
 			audioRecorder.release();
 		}
+	}
+
+	public double getCurrentFrequency() {
+		return currentFrequency;
 	}
 }
