@@ -33,7 +33,7 @@ public class Tuner extends Thread {
 
 	public void run() {
 		if (audioRecorder.getState() != AudioRecord.STATE_INITIALIZED) {
-			Log.e(TAG, "Audio Recorder not initialized. Check to see if permission is given.")
+			Log.e(TAG, "Audio Recorder not initialized. Check to see if permission is given.");
 			return; // Do nothing if not initialized
 		}
 		audioRecorder.startRecording();
