@@ -24,7 +24,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
-
 	private static final String TAG = "MainActivity";
 	private static final String[] NOTE_NAMES = { "A", "Bb", "B", "C", "Db",
 			"D", "Eb", "E", "F", "F#", "G", "Ab" };
@@ -47,10 +46,8 @@ public class MainActivity extends Activity {
 	private TextView mAnswerText;
 	private TextView mIntervalText;
 	private TextView mPercentage;
-	//private TextView mCountDown;
 	private Button mPlayNote;
 	private Button mPlayAnswer;
-	private Button mNextQuestion;
 	private ToggleButton mRecordToggle;
 	private Tuner mTuner;
 	private CountDownTimer mCountDownTimer;
@@ -60,13 +57,9 @@ public class MainActivity extends Activity {
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
-	//private CountDownTimer mTimeLimitTimer;
-	private boolean timerRunning;
-
 	private static ToneGenerator mToneGenerator;
 
 	// preferences
-	private int timelimit;
 	private int wavetype;
 	private int max_interval; // 0 = unison, 12 = octave, 13 = m9 etc...
 
@@ -86,8 +79,6 @@ public class MainActivity extends Activity {
 			} else {
 				mPossibleAnswers.put(key, 1);
 			}
-			// mFreqText.setText(NOTE_NAMES[key]);
-			// mFreqText.setText(Double.toString(mTuner.currentFrequency));
 		}
 	};
 
@@ -97,19 +88,10 @@ public class MainActivity extends Activity {
 		super.onResume();
 		SharedPreferences SP = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
-		timelimit = Integer.parseInt(SP.getString("timelimit", "5"));
 		wavetype = Integer.parseInt(SP.getString("waveform", "0"));
 		max_interval = Integer.parseInt(SP.getString("interval", "12"));
 		mToneGenerator.setWaveType(wavetype);
 		//mCountDown.setText("" + timelimit);
-	}
-
-	@Override
-	protected void onPause() {
-		Log.v(TAG, "in onPause()...");
-		super.onPause();
-		// Log.v(TAG, "Stopping Tuner...");
-		// mTuner.close();
 	}
 
 	private void startTuner() {
@@ -131,8 +113,6 @@ public class MainActivity extends Activity {
 		mPlayNote = (Button) findViewById(R.id.play_note_button);
 		mPlayAnswer = (Button) findViewById(R.id.play_answer);
 		mPercentage = (TextView) findViewById(R.id.percentage);
-		//mCountDown = (TextView) findViewById(R.id.countdown);
-		mNextQuestion = (Button) findViewById(R.id.generate_question_button);
 		mToneGenerator = new ToneGenerator();
 
 		// get your ToggleButton
@@ -141,11 +121,9 @@ public class MainActivity extends Activity {
 		// set preferences
 		SharedPreferences SP = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
-		timelimit = Integer.parseInt(SP.getString("timelimit", "5"));
 		wavetype = Integer.parseInt(SP.getString("waveform", "0"));
 		max_interval = Integer.parseInt(SP.getString("interval", "12"));
 		mToneGenerator.setWaveType(wavetype);
-		//mCountDown.setText("" + timelimit);
 
 		numCorrects = 0;
 		numIncorrects = 0;
@@ -159,10 +137,7 @@ public class MainActivity extends Activity {
 					mRecordToggle.setEnabled(false);
 					mCountDownTimer = new CountDownTimer(2000, 100) {
 
-						public void onTick(long millisUntilFinished) {
-							// mCountdown.setText("" + millisUntilFinished /
-							// 1000);
-						}
+						public void onTick(long millisUntilFinished) {}
 
 						public void onFinish() {
 							mRecordToggle.performClick();
@@ -195,15 +170,9 @@ public class MainActivity extends Activity {
 									.getNoteNameValue()]);
 							mPlayAnswer.setEnabled(true);
 
-							// Toast.makeText(getApplicationContext(),
-							// "Answer:" + NOTE_NAMES[mUserAnswer],
-							// Toast.LENGTH_SHORT).show();
 							mUserAnswer = null;
 							mPossibleAnswers.clear();
-							//mTimeLimitTimer.cancel();
 							mRecordToggle.setEnabled(false);
-							//mNextQuestion.setEnabled(true);
-
 						}
 					};
 					mCountDownTimer.start();
@@ -226,7 +195,6 @@ public class MainActivity extends Activity {
                 break;
         }
         if (!permissionToRecordAccepted ) finish();
-
     }
 
 
@@ -251,40 +219,9 @@ public class MainActivity extends Activity {
 	public void play_note(View Button) {
 		mPlayNote.setEnabled(false);
 		mToneGenerator.playTone(baseNote.getFrequency(), 1);
-//		mTimeLimitTimer = new CountDownTimer(timelimit * 1000, 100) {
-//
-//			public void onTick(long millisUntilFinished) {
-//				mCountDown.setText("" + millisUntilFinished / 1000);
-//			}
-//
-//			public void onFinish() {
-//				// if the user has not started recording the note, force start
-//				if (mRecordToggle.isEnabled()) {
-//					mRecordToggle.performClick();
-//				}
-//			}
-//		};
-//		Handler handler = new Handler();
-//		handler.postDelayed(new Runnable() {
-//			public void run() {
-//				timerRunning = true;
-//				mTimeLimitTimer.start();
-//			}
-//		}, 1000);
-
-		// starting
-		// notes are
-		// between
-		// A3 and A5
-		// Random rand = new Random();
-		// int interval = rand.nextInt(13);// for now, 0(unison) to 12(octave)
-		// correctInterval = interval;
-		// int direction = rand.nextInt(2);// 0 = up, 1 = down;
-		// correctDirection = direction;
 	}
 
 	public void play_answer(View button) {
-
 		mToneGenerator.playTone(baseNote.getFrequency(), 1);
 		Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
@@ -305,8 +242,6 @@ public class MainActivity extends Activity {
 	public void generate_question(View Button) {
 		Random rand = new Random();
 		baseNote = Note.getRandom(Note.A3, Note.A5);// for now,
-		// Log.v(TAG, "generate_question -> base note: " +
-		// NOTE_NAMES[baseNote.getValue()])
 		int interval = rand.nextInt(1 + max_interval);
 		int direction = rand.nextInt(2);// 0 = up, 1 = down;
 		answerInterval = interval;
@@ -328,15 +263,12 @@ public class MainActivity extends Activity {
 				+ (direction == 0 ? "Up" : "Down") + " from "
 				+ NOTE_NAMES[baseNote.getNoteNameValue()]);
 		mPlayNote.setText("Play " + NOTE_NAMES[baseNote.getNoteNameValue()]);
-		//mCountDown.setText("" + timelimit);
 		mPlayAnswer.setEnabled(false);
 		mPlayNote.setEnabled(true);
-		//mNextQuestion.setEnabled(false);
 		mRecordToggle.setEnabled(true);
 		mFreqText.setText("Your Answer:");
 		mAnswerText.setText("Correct Answer:");
 		calculatePercentage();
-		
 	}
 
 	private void calculatePercentage() {
