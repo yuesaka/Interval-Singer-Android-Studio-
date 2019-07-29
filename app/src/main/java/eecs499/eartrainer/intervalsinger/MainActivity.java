@@ -3,13 +3,16 @@ package eecs499.eartrainer.intervalsinger;
 import java.util.HashMap;
 import java.util.Random;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +32,7 @@ public class MainActivity extends Activity {
 			"Major 2nd", "minor 3rd", "Major 3rd", "Perfect 4th", "Tritone",
 			"Perfect 5th", "minor 6th", "Major 6th", "minor 7th", "Major 7th",
 			"Octave" };
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
 	// Questions related variables
 	private Note baseNote;
@@ -53,6 +57,8 @@ public class MainActivity extends Activity {
 	private final Handler mHandler = new Handler();
 	private HashMap<Integer, Integer> mPossibleAnswers = new HashMap<Integer, Integer>();
 	private Integer mUserAnswer;
+    private boolean permissionToRecordAccepted = false;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
 	//private CountDownTimer mTimeLimitTimer;
 	private boolean timerRunning;
@@ -117,7 +123,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mFreqText = (TextView) findViewById(R.id.freq);
+		ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
+        mFreqText = (TextView) findViewById(R.id.freq);
 		mAnswerText = (TextView) findViewById(R.id.answer_pitch);
 		mIntervalText = (TextView) findViewById(R.id.question_interval);
 		mPlayNote = (Button) findViewById(R.id.play_note_button);
@@ -168,7 +176,8 @@ public class MainActivity extends Activity {
 									mUserAnswer = entry.getKey();
 								}
 							}
-							if (mUserAnswer == answerNote.getNoteNameValue()) {
+							if (answerNote != null && mUserAnswer != null &&
+									mUserAnswer == answerNote.getNoteNameValue()) {
 								Toast.makeText(getApplicationContext(),
 										"Correct!", Toast.LENGTH_SHORT).show();
 								numCorrects++;
@@ -179,7 +188,9 @@ public class MainActivity extends Activity {
 								numIncorrects++;
 								calculatePercentage();
 							}
-							mFreqText.setText("Your Answer:" + NOTE_NAMES[mUserAnswer]);
+							if (mUserAnswer != null) {
+                                mFreqText.setText("Your Answer:" + NOTE_NAMES[mUserAnswer]);
+                            }
 							mAnswerText.setText("Correct Answer:" + NOTE_NAMES[answerNote
 									.getNoteNameValue()]);
 							mPlayAnswer.setEnabled(true);
@@ -206,7 +217,20 @@ public class MainActivity extends Activity {
 		});
 	}
 
-	@Override
+    @Override
+    public void onRequestPermissionsResult(int requestCode,  String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if (!permissionToRecordAccepted ) finish();
+
+    }
+
+
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);

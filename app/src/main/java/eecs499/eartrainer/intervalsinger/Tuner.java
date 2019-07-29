@@ -4,6 +4,7 @@ import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
+import android.util.Log;
 
 public class Tuner extends Thread {
 	static {
@@ -30,13 +31,16 @@ public class Tuner extends Thread {
 	}
 
 	public void run() {
+		Log.d("yuma", "Tuner#run");
 		if (audioRecorder.getState() != AudioRecord.STATE_INITIALIZED) {
+			Log.d("yuma", "returning");
 			return; // Do nothing if not initialized
 		}
 		audioRecorder.startRecording();
 		byte[] readBuffer = new byte[READ_BUFFER_SIZE];
 		byte[] processBuffer = new byte[PROCESS_BUFFER_SIZE * READ_BUFFER_SIZE];
 		int nextToFillIndex = 0;
+		Log.d("yuma", "before while loop " );
 
 		while (audioRecorder.read(readBuffer, 0, readBuffer.length) > 0) {
 			System.arraycopy(readBuffer, 0, processBuffer, nextToFillIndex * READ_BUFFER_SIZE,
@@ -45,7 +49,7 @@ public class Tuner extends Thread {
 			nextToFillIndex %= PROCESS_BUFFER_SIZE;
 
 			currentFrequency = processSampleData(processBuffer, SAMPLE_RATE);
-
+			Log.d("yuma", "currentFrequency: " + currentFrequency);
 			if (currentFrequency > 0) {
 				mHandler.post(callback);
 			}
