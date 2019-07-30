@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
@@ -62,6 +64,8 @@ public class MainActivity extends Activity {
 	// preferences
 	private int wavetype;
 	private int max_interval; // 0 = unison, 12 = octave, 13 = m9 etc...
+
+	private FirebaseAuth mAuth;
 
 	private final Runnable callback = new Runnable() {
 		public void run() {
@@ -105,6 +109,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
 		ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         mFreqText = (TextView) findViewById(R.id.freq);
