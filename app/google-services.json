@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "364556484537",
+    "firebase_url": "https://interval-singer.firebaseio.com",
+    "project_id": "interval-singer",
+    "storage_bucket": "interval-singer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364556484537:android:192734f64cac2a51",
+        "android_client_info": {
+          "package_name": "eecs499.eartrainer.intervalsinger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364556484537-qg25gt7b0sa86eatq13cgq48l37tuu71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO2gk4kR5YQ1qOjijd6teRCgRT4vUz7Qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364556484537-qg25gt7b0sa86eatq13cgq48l37tuu71.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

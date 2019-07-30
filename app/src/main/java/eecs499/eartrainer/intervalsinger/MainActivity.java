@@ -22,8 +22,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import com.google.firebase.auth.FirebaseAuth;
-
 
 public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
@@ -65,7 +63,6 @@ public class MainActivity extends Activity {
 	private int wavetype;
 	private int max_interval; // 0 = unison, 12 = octave, 13 = m9 etc...
 
-	private FirebaseAuth mAuth;
 
 	private final Runnable callback = new Runnable() {
 		public void run() {

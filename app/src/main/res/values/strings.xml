@@ -12,5 +12,7 @@
     <string name="recording">Recording</string>
     <string name="pitch">Hz</string>
     <string name="play_answer">Play Answer</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login2">Login2Activity</string>
 
 </resources>
