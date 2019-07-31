@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="email"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="142dp" />
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="92dp" />
 
     <EditText
         android:id="@+id/password"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:hint="password"
         tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="200dp" />
+        tools:layout_editor_absoluteY="169dp" />
 
     <Button
         android:id="@+id/submit"

@@ -1,5 +1,6 @@
 package eecs499.eartrainer.intervalsinger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -19,6 +20,7 @@ public class Login2Activity extends Activity {
     private static final String TAG = Login2Activity.class.getSimpleName();
     private FirebaseAuth firebaseAuth;
     private Button newUser;
+    private Button submit;
 
 
     @Override
@@ -63,6 +65,12 @@ public class Login2Activity extends Activity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            Toast.makeText(this, "currentUser: " + currentUser.getEmail(), Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
         //updateUI(currentUser)
     }
 }
