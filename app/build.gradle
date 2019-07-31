@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'androidx.annotation:annotation:1.0.0-alpha1'
 }
 
 apply plugin: 'com.google.gms.google-services'
