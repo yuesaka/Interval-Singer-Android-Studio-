@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class Login2Activity extends Activity {
     private static final String TAG = Login2Activity.class.getSimpleName();
     private FirebaseAuth firebaseAuth;
@@ -30,6 +32,11 @@ public class Login2Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            Toast.makeText(this, "currentUser: " + currentUser.getEmail(), Toast.LENGTH_LONG).show();
+            startMainActivity();
+        }
         submit = findViewById(R.id.email_sign_in_button);
         guestLogin = findViewById(R.id.login_as_guest);
         email = findViewById(R.id.email);
@@ -113,6 +120,8 @@ public class Login2Activity extends Activity {
 
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 }

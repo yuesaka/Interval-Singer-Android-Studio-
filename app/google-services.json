@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "364556484537-3i4uhd9lr4142cifv98e9t1kd59ofevt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "eecs499.eartrainer.intervalsinger",
+            "certificate_hash": "343edfe1c8b221b2309de0a49c4888d7455b1512"
+          }
+        },
+        {
           "client_id": "364556484537-qg25gt7b0sa86eatq13cgq48l37tuu71.apps.googleusercontent.com",
           "client_type": 3
         }
