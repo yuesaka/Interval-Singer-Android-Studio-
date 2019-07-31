@@ -24,7 +24,6 @@ android {
     }
     externalNativeBuild {
         ndkBuild {
-            //path 'build/intermediates/ndk/debug/Android.mk'
             path 'src/main/jni/Android.mk'
         }
     }
